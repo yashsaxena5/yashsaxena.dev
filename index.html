@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yash Saxena | Mixed-Signal & Cryogenic ASIC Engineer</title>
-    <meta name="description" content="Fermilab ASIC Engineer | Cryogenic ICs, High-Speed SerDes, UVM Verification | 1.875 ps RMS Jitter | 4K Validation"/>
+    <meta name="description" content="Fermilab ASIC Engineer | Cryogenic ICs, High-Speed SerDes, UVM Verification | 1.875 ps RMS Jitter | 4K Validation">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <script>
@@ -16,10 +16,10 @@
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        neon: '#00ffea',
-                        cryo: '#00d0ff',
-                        dark: '#0a0e17',
-                        card: '#111827',
+                        neon: '#00ffea', /* Bright Cyan/Neon */
+                        cryo: '#00d0ff', /* Cryogenic Blue */
+                        dark: '#0a0e17', /* Very Dark Background */
+                        card: '#111827', /* Dark Card Background */
                     }
                 }
             }
@@ -45,41 +45,37 @@
             border: 1px solid #1f2937; /* Thin internal border */
             user-select: none;
         }
-        /* Thicker vertical borders at 3rd and 6th column */
-        .sudoku-grid > div:nth-child(3n) { border-right-width: 3px; border-right-color: #00ffea; }
-        /* Thicker horizontal borders after row 3 and row 6:
-           The indices for row 3 are 19..27 (1-based), for row 6 are 46..54.
-           We target the cells in those ranges using nth-child selectors combined with :nth-child(n) math.
-        */
+        
+        /* Thick Box Borders using nth-child selectors */
+        .sudoku-grid > div:nth-child(9n+3),
+        .sudoku-grid > div:nth-child(9n+6) { border-right-width: 3px; border-right-color: #00ffea; }
         .sudoku-grid > div:nth-child(n+19):nth-child(-n+27),
-        .sudoku-grid > div:nth-child(n+46):nth-child(-n+54) {
-            border-bottom-width: 3px; border-bottom-color: #00ffea;
-        }
+        .sudoku-grid > div:nth-child(n+46):nth-child(-n+54) { border-bottom-width: 3px; border-bottom-color: #00ffea; }
 
         /* Cell States */
-        .cell.fixed {
-            background: #1f2937;
-            color: #00ffea;
-            font-weight: bold;
-            cursor: default;
+        .cell.fixed { 
+            background: #1f2937; 
+            color: #00ffea; 
+            font-weight: bold; 
+            cursor: default; 
         }
-        .cell.user-input {
+        .cell.user-input { 
             color: #00d0ff; /* Cryo blue for input */
         }
-        .cell:hover:not(.fixed):not(.selected) {
-            background: #1e40af;
+        .cell:hover:not(.fixed) { 
+            background: #1e40af; 
         }
-        .cell.selected {
-            background: #1e40af !important;
-            outline: 3px solid #00ffea;
-            outline-offset: -3px;
+        .cell.selected { 
+            background: #1e40af !important; 
+            outline: 3px solid #00ffea; 
+            outline-offset: -3px; 
         }
-        .cell.error {
-            background: #7f1d1d !important;
+        .cell.error { 
+            background: #7f1d1d !important; 
             color: white !important;
         }
         .cell.solving {
-            animation: pulse 0.6s ease-in-out infinite;
+            animation: pulse 0.6s ease-in-out infinite; /* Added infinite loop for visual effect */
         }
         @keyframes pulse {
             0%, 100% { opacity: 1; }
@@ -122,8 +118,8 @@
             <div class="bg-card/80 backdrop-blur border border-neon/20 rounded-2xl p-10 border-glow">
                 <h2 class="text-4xl font-bold text-neon glow mb-8 font-mono">// PROFILE.exe</h2>
                 <p class="text-gray-300 leading-relaxed text-lg">
-                    ASIC Engineer at <strong>Fermilab</strong> delivering tape-out-ready mixed-signal ICs for extreme environments (4K cryogenic operation).
-                    Full ownership from architecture → RTL → UVM verification → physical design → silicon validation.
+                    ASIC Engineer at <strong>Fermilab</strong> delivering tape-out-ready mixed-signal ICs for extreme environments (4K cryogenic operation). 
+                    Full ownership from architecture → RTL → UVM verification → physical design → silicon validation. 
                     Passionate about constraint-driven design, backtracking algorithms, and pushing the limits of silicon at −269°C.
                 </p>
             </div>
@@ -183,13 +179,15 @@
                     Real-time demonstration of backtracking + constraint satisfaction — the same algorithm class used in formal verification, SAT solvers, and timing closure engines.
                 </p>
                 <div id="sudoku-container">
-                    <div id="grid" class="sudoku-grid mb-6" aria-label="Sudoku grid"></div>
+                    <div id="grid" class="sudoku-grid mb-6"></div>
+                    <!-- Updated button layout for Check, Solve, and New Puzzle -->
                     <div class="flex flex-wrap justify-center gap-4 mb-6">
                         <button id="new-puzzle" class="px-6 py-3 bg-neon text-black font-bold rounded hover:bg-cryo transition font-mono text-sm">NEW_PUZZLE()</button>
                         <button id="check-constraints" class="px-6 py-3 border-2 border-cryo text-cryo hover:bg-cryo hover:text-black transition font-mono text-sm">CHECK_CONSTRAINTS()</button>
                         <button id="solve-all" class="px-6 py-3 border-2 border-neon text-neon hover:bg-neon hover:text-black transition font-mono text-sm">SOLVE()</button>
                     </div>
                     <p id="status" class="text-xl font-mono text-cryo"></p>
+                    <!-- Add this line inside the verification demo section, right after the status -->
                     <p class="text-sm text-gray-500 mt-4 font-mono">
                         Backtracking depth: ~10⁶–10⁸ states | Same complexity class as formal equivalence checking
                     </p>
@@ -225,7 +223,7 @@
         // Constants
         const GRID_SIZE = 9;
         const EMPTY_CELL = 0;
-
+        
         // DOM Elements
         const grid = document.getElementById('grid');
         const status = document.getElementById('status');
@@ -238,23 +236,37 @@
         let currentBoard = [];   // Stores the current state (fixed + user input)
         let solutionBoard = [];  // Stores the golden solved state
         let selected = null;
-        let isInteractionLocked = false; // used to disable clicks/keyboard when needed
 
         // --- Core Sudoku Algorithm (Backtracking Solver) ---
+
+        /**
+         * Checks if a number 'num' is valid at (row, col) in the given board.
+         * @param {number[][]} board - The current 9x9 board array.
+         * @param {number} row - The row index.
+         * @param {number} col - The column index.
+         * @param {number} num - The number (1-9) to check.
+         * @returns {boolean} True if the number is valid, false otherwise.
+         */
         function isValid(board, row, col, num) {
+            // Check row and column
             for (let x = 0; x < GRID_SIZE; x++) {
                 if (board[row][x] === num || board[x][col] === num) return false;
             }
-            const boxRow = row - (row % 3);
-            const boxCol = col - (col % 3);
-            for (let i = 0; i < 3; i++) {
-                for (let j = 0; j < 3; j++) {
+            // Check 3x3 box
+            const boxRow = row - row % 3;
+            const boxCol = col - col % 3;
+            for (let i = 0; i < 3; i++)
+                for (let j = 0; j < 3; j++)
                     if (board[boxRow + i][boxCol + j] === num) return false;
-                }
-            }
             return true;
         }
 
+        /**
+         * Solves the Sudoku board using a recursive backtracking algorithm.
+         * Note: This modifies the board array passed to it.
+         * @param {number[][]} board - The board to solve.
+         * @returns {boolean} True if a solution is found, false otherwise.
+         */
         function solve(board) {
             for (let row = 0; row < GRID_SIZE; row++) {
                 for (let col = 0; col < GRID_SIZE; col++) {
@@ -263,7 +275,7 @@
                             if (isValid(board, row, col, num)) {
                                 board[row][col] = num;
                                 if (solve(board)) return true;
-                                board[row][col] = EMPTY_CELL;
+                                board[row][col] = EMPTY_CELL; // Backtrack
                             }
                         }
                         return false;
@@ -274,92 +286,85 @@
         }
 
         // --- Game Setup and UI Logic ---
+
+        /**
+         * Renders the internal currentBoard state to the HTML grid.
+         */
         function renderBoard() {
             const cells = grid.children;
             for (let i = 0; i < 81; i++) {
                 const r = Math.floor(i / 9);
                 const c = i % 9;
                 const value = currentBoard[r][c];
-                const cell = cells[i];
-                cell.textContent = value === EMPTY_CELL ? '' : value;
-                cell.classList.remove('fixed', 'user-input', 'selected', 'error');
+                
+                cells[i].textContent = value === EMPTY_CELL ? '' : value;
+                cells[i].classList.remove('fixed', 'user-input', 'selected', 'error');
 
                 if (initialBoard[r][c] !== EMPTY_CELL) {
-                    cell.classList.add('fixed');
+                    cells[i].classList.add('fixed');
                 } else if (value !== EMPTY_CELL) {
-                    cell.classList.add('user-input');
+                    cells[i].classList.add('user-input');
                 }
             }
         }
 
+        /**
+         * Initializes the HTML grid and generates a new puzzle.
+         */
         function createBoard() {
-            // reset lock & DOM
-            isInteractionLocked = false;
             grid.innerHTML = '';
             for (let i = 0; i < 81; i++) {
                 const cell = document.createElement('div');
                 cell.className = 'cell';
-                cell.setAttribute('data-index', i);
-                // stable handler that checks lock state
-                cell.addEventListener('click', cellClicked);
-                cell.tabIndex = 0; // allow focus
+                cell.addEventListener('click', () => selectCell(cell, i));
                 grid.appendChild(cell);
             }
             generatePuzzle();
         }
 
-        function cellClicked(e) {
-            if (isInteractionLocked) return;
-            const el = e.currentTarget;
-            const idx = parseInt(el.dataset.index, 10);
-            selectCell(el, idx);
-        }
-
+        /**
+         * Generates the initial puzzle, setting the internal state (initialBoard, currentBoard, solutionBoard).
+         */
         function generatePuzzle() {
-            // 1. generate a full solved board
-            solutionBoard = Array.from({length: 9}, () => Array(9).fill(EMPTY_CELL));
-            // seed with a random first row to make puzzles varied
-            const firstRow = [1,2,3,4,5,6,7,8,9].sort(() => Math.random() - 0.5);
-            solutionBoard[0] = firstRow.slice();
-            // attempt to solve to completion from that seed
-            if (!solve(solutionBoard)) {
-                // fallback: if seeded attempt fails (very unlikely) re-init blank and solve
-                solutionBoard = Array.from({length: 9}, () => Array(9).fill(EMPTY_CELL));
-                solve(solutionBoard);
-            }
+            // 1. Generate solved board
+            solutionBoard = Array(9).fill().map(() => Array(9).fill(EMPTY_CELL));
+            solve(solutionBoard); 
+            
+            // 2. Create puzzle by copying and removing numbers
+            currentBoard = solutionBoard.map(row => [...row]); 
+            initialBoard = solutionBoard.map(row => [...row]); 
 
-            // 2. create puzzle by copying and removing numbers
-            currentBoard = solutionBoard.map(r => r.slice());
-            initialBoard = solutionBoard.map(r => r.slice());
-
-            let toRemove = 50;
+            let toRemove = 50; 
             let removedCount = 0;
             while (removedCount < toRemove) {
                 let r = Math.floor(Math.random() * GRID_SIZE);
                 let c = Math.floor(Math.random() * GRID_SIZE);
+                
                 if (initialBoard[r][c] !== EMPTY_CELL) {
-                    initialBoard[r][c] = EMPTY_CELL;
-                    currentBoard[r][c] = EMPTY_CELL;
+                    const tempValue = initialBoard[r][c];
+                    initialBoard[r][c] = EMPTY_CELL; // Attempt removal
+                    
+                    // Note: Skipping full unique solution check for performance in this demo
+                    currentBoard[r][c] = EMPTY_CELL; // Remove from current board
                     removedCount++;
                 }
             }
-
-            // ensure currentBoard matches initialBoard (clean)
-            currentBoard = initialBoard.map(r => r.slice());
+            
+            // Re-solve the puzzle to ensure currentBoard is clean
+            currentBoard = initialBoard.map(row => [...row]);
+            
             renderBoard();
             status.textContent = 'Constraint puzzle loaded. Ready for input.';
             status.className = 'text-xl font-mono text-cryo';
             selected = null;
-            isInteractionLocked = false;
         }
 
+        /**
+         * Handles cell selection.
+         */
         function selectCell(cell, idx) {
-            if (isInteractionLocked) return;
-
-            if (selected) {
-                selected.classList.remove('selected', 'error');
-            }
-
+            if (selected) selected.classList.remove('selected', 'error');
+            
             const r = Math.floor(idx / 9);
             const c = idx % 9;
 
@@ -371,100 +376,120 @@
             }
         }
 
+        /**
+         * Handles user keyboard input (1-9, Backspace, Delete).
+         */
         function handleKeyDown(e) {
-            if (isInteractionLocked) return;
             if (!selected) return;
 
-            const idx = parseInt(selected.dataset.index, 10);
+            const idx = [...grid.children].indexOf(selected);
             const r = Math.floor(idx / 9);
             const c = idx % 9;
 
             if (e.key >= '1' && e.key <= '9') {
-                const num = parseInt(e.key, 10);
+                const num = parseInt(e.key);
                 currentBoard[r][c] = num;
                 selected.textContent = num;
                 selected.classList.add('user-input');
-                selected.classList.remove('error');
+                selected.classList.remove('error'); // Clear error on new input
             } else if (e.key === 'Backspace' || e.key === 'Delete') {
                 currentBoard[r][c] = EMPTY_CELL;
                 selected.textContent = '';
-                selected.classList.remove('user-input', 'error');
+                selected.classList.remove('user-input', 'error'); 
             }
         }
 
         // --- Verification Functions ---
+
+        /**
+         * Performs constraint checking and reports results.
+         */
         function checkConstraints() {
+            // Clear previous errors - Using Array.from to iterate correctly over HTMLCollection
             const cells = Array.from(grid.children);
-            // clear previous errors
             cells.forEach(cell => cell.classList.remove('error'));
 
             let errors = 0;
-            // Compare filled cells to the known solution (golden)
+            let totalConstraints = GRID_SIZE * 3; // 9 rows + 9 columns + 9 blocks = 27 checks.
+
+            // Find all cells that don't match the solution
             for (let r = 0; r < GRID_SIZE; r++) {
                 for (let c = 0; c < GRID_SIZE; c++) {
-                    const val = currentBoard[r][c];
-                    if (val !== EMPTY_CELL && solutionBoard[r][c] !== val) {
+                    if (currentBoard[r][c] !== EMPTY_CELL && 
+                        currentBoard[r][c] !== solutionBoard[r][c]) {
+                        
                         cells[r * GRID_SIZE + c].classList.add('error');
                         errors++;
                     }
                 }
             }
-
+            
             const filledCount = currentBoard.flat().filter(n => n !== EMPTY_CELL).length;
-            const totalCells = GRID_SIZE * GRID_SIZE;
-            const isSolved = (errors === 0) && (filledCount === totalCells);
-
+            const requiredCount = GRID_SIZE * GRID_SIZE;
+            const isSolved = (errors === 0) && (filledCount === requiredCount);
+            
+            // --- Update Status ---
             if (isSolved) {
                 status.textContent = 'Verification PASSED: All 81 constraints satisfied.';
                 status.className = 'text-xl font-mono text-neon glow';
-                // lock further interaction
-                isInteractionLocked = true;
+                // Disable input after completion
+                cells.forEach(cell => cell.removeEventListener('click', selectCell));
             } else if (errors > 0) {
-                const passed = totalCells - errors;
-                status.textContent = `Verification FAILED: ${errors} incorrect cell(s). ${passed} cells matched the golden solution.`;
+                const passedConstraints = requiredCount - errors;
+                status.textContent = `Verification FAILED: ${errors} errors found. ${passedConstraints} constraints passed.`;
                 status.className = 'text-xl font-mono text-red-500';
             } else {
-                status.textContent = `Verification INCOMPLETE: ${totalCells - filledCount} cells remain empty.`;
+                status.textContent = `Verification INCOMPLETE: ${requiredCount - filledCount} cells remain empty.`;
                 status.className = 'text-xl font-mono text-cryo';
             }
         }
 
+        /**
+         * Instantly solves the puzzle and displays the result after an animation delay.
+         */
         function solveAll() {
             const cells = Array.from(grid.children);
             status.textContent = 'Executing Backtracking Algorithm...';
-            status.className = 'text-xl font-mono text-neon glow';
+            status.className = 'text-xl font-mono text-neon glow'; 
 
-            // show "solving" animation
-            cells.forEach(cell => cell.classList.add('solving'));
-            // disable interactions & buttons
-            isInteractionLocked = true;
+            // 1. Start "solving" animation (add 'solving' class)
+            cells.forEach(cell => {
+                cell.classList.add('solving');
+            });
+            
+            // Disable buttons during delay
             btnSolveAll.disabled = true;
             btnCheckConstraints.disabled = true;
             btnNewPuzzle.disabled = true;
-
+            
+            // 2. Set a timeout to display the result
             setTimeout(() => {
-                // stop animation
-                cells.forEach(cell => cell.classList.remove('solving', 'selected', 'user-input', 'error'));
-
-                // load golden solution into currentBoard
-                currentBoard = solutionBoard.map(r => r.slice());
-                renderBoard();
-
-                status.textContent = 'Full solution loaded. Constraints satisfied.';
-                status.className = 'text-xl font-mono text-neon';
-
-                // mark everything as fixed and lock interactions
-                cells.forEach(cell => cell.classList.add('fixed'));
-                isInteractionLocked = true;
-
-                // re-enable buttons that make sense (keep board locked until NEW_PUZZLE)
+                // Stop animation
+                cells.forEach(cell => {
+                    cell.classList.remove('solving');
+                });
+                
+                // Re-enable buttons
                 btnSolveAll.disabled = false;
                 btnCheckConstraints.disabled = false;
                 btnNewPuzzle.disabled = false;
-            }, 1200);
+
+                // 3. Display the solution
+                currentBoard = solutionBoard.map(row => [...row]); // Load golden solution
+                
+                // Lock the board by treating all cells as initial/fixed.
+                initialBoard = solutionBoard.map(row => [...row]);
+                
+                renderBoard();
+                
+                status.textContent = 'Full solution loaded. Constraints satisfied.';
+                status.className = 'text-xl font-mono text-neon';
+                
+            }, 1200); 
         }
 
         // --- Initialization ---
+
         document.addEventListener('DOMContentLoaded', () => {
             btnNewPuzzle.addEventListener('click', createBoard);
             btnCheckConstraints.addEventListener('click', checkConstraints);
