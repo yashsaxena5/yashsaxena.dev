@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yash Saxena | Mixed-Signal & Cryogenic ASIC Engineer</title>
-    <meta name="description" content="Fermilab ASIC Engineer | Cryogenic ICs, High-Speed SerDes, UVM Verification | 1.875 ps RMS Jitter | 4K Validation">
+    <title>Yash Saxena | VLSI Design Engineer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <script>
@@ -16,488 +15,239 @@
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        neon: '#00ffea', /* Bright Cyan/Neon */
-                        cryo: '#00d0ff', /* Cryogenic Blue */
-                        dark: '#0a0e17', /* Very Dark Background */
-                        card: '#111827', /* Dark Card Background */
+                        neon: '#00ffea',
+                        cryo: '#00d0ff',
+                        dark: '#0a0e17',
+                        card: '#111827',
+                        hover: '#1e293b',
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Global Styles */
-        .glow { text-shadow: 0 0 15px #00ffea; }
-        .border-glow { box-shadow: 0 0 20px rgba(0, 255, 234, 0.25); }
-
-        /* Sudoku Grid Styling */
-        .sudoku-grid {
-            display: grid;
-            grid-template-columns: repeat(9, 1fr);
-            max-width: 480px; aspect-ratio: 1; margin: 2rem auto;
-            border: 3px solid #00ffea; /* Main border */
-            box-shadow: 0 0 30px rgba(0, 255, 234, 0.4);
+        /* Custom Tab Styles */
+        .tab-btn {
+            position: relative;
+            transition: all 0.3s ease;
         }
-        .cell {
-            background: #111827; color: #e5e7eb; font-family: 'JetBrains Mono';
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.4rem; cursor: pointer; transition: all 0.2s;
-            border: 1px solid #1f2937; /* Thin internal border */
-            user-select: none;
+        .tab-btn.active {
+            color: #00ffea;
+            background-color: rgba(0, 255, 234, 0.1);
+            border-bottom: 2px solid #00ffea;
+        }
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #00ffea;
+            transition: width 0.3s ease;
+        }
+        .tab-btn:hover::after {
+            width: 100%;
         }
         
-        /* Thick Box Borders using nth-child selectors */
-        .sudoku-grid > div:nth-child(9n+3),
-        .sudoku-grid > div:nth-child(9n+6) { border-right-width: 3px; border-right-color: #00ffea; }
-        .sudoku-grid > div:nth-child(n+19):nth-child(-n+27),
-        .sudoku-grid > div:nth-child(n+46):nth-child(-n+54) { border-bottom-width: 3px; border-bottom-color: #00ffea; }
-
-        /* Cell States */
-        .cell.fixed { 
-            background: #1f2937; 
-            color: #00ffea; 
-            font-weight: bold; 
-            cursor: default; 
+        /* Fade Animation for Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
         }
-        .cell.user-input { 
-            color: #00d0ff; /* Cryo blue for input */
+        .tab-content.active {
+            display: block;
         }
-        .cell:hover:not(.fixed) { 
-            background: #1e40af; 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .cell.selected { 
-            background: #1e40af !important; 
-            outline: 3px solid #00ffea; 
-            outline-offset: -3px; 
-        }
-        .cell.error { 
-            background: #7f1d1d !important; 
-            color: white !important;
-        }
-        .cell.solving {
-            animation: pulse 0.6s ease-in-out infinite; /* Added infinite loop for visual effect */
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; background: #00ffea; color: black; }
-        }
+        
+        .glow { text-shadow: 0 0 15px #00ffea; }
     </style>
 </head>
-<body class="bg-dark text-gray-100 min-h-screen">
+<body class="bg-dark text-gray-200 min-h-screen font-sans flex flex-col">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-50 bg-black/90 backdrop-blur border-b border-neon/30">
-        <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center font-mono text-sm">
-            <div class="text-xl font-bold text-neon">$ yash.saxena@vlsi</div>
-            <div class="flex space-x-8">
-                <a href="#about" class="hover:text-neon transition">About</a>
-                <a href="#skills" class="hover:text-neon transition">Skills</a>
-                <a href="#projects" class="hover:text-neon transition">Projects</a>
-                <a href="#verification-demo" class="hover:text-neon transition">Verification Demo</a>
-                <a href="#contact" class="hover:text-neon transition">Contact</a>
-            </div>
-        </nav>
+    <!-- Header / Hero Section -->
+    <header class="pt-20 pb-10 px-6 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight">
+                Hi, This is <span class="text-neon glow">Yash</span>.
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                Here are things you wanna know about me.
+            </p>
+        </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-6 py-12">
+    <!-- Main Content Area with Tabs -->
+    <main class="flex-grow max-w-5xl mx-auto w-full px-6 mb-20">
+        
+        <!-- Tab Navigation -->
+        <nav class="flex flex-wrap justify-center gap-2 border-b border-gray-800 mb-10 font-mono text-sm md:text-base">
+            <button onclick="switchTab('experience')" class="tab-btn active px-6 py-4 hover:text-neon">EXPERIENCE</button>
+            <button onclick="switchTab('education')" class="tab-btn px-6 py-4 hover:text-neon">EDUCATION</button>
+            <button onclick="switchTab('skills')" class="tab-btn px-6 py-4 hover:text-neon">SKILLS</button>
+            <button onclick="switchTab('interests')" class="tab-btn px-6 py-4 hover:text-neon">INTERESTS</button>
+            <button onclick="switchTab('resume')" class="tab-btn px-6 py-4 hover:text-neon">RESUME</button>
+        </nav>
 
-        <!-- Hero -->
-        <section class="text-center py-24">
-            <h1 class="text-6xl md:text-8xl font-extrabold bg-gradient-to-r from-neon to-cryo bg-clip-text text-transparent glow">
-                Yash Saxena
-            </h1>
-            <p class="text-2xl mt-4 text-neon font-mono">Mixed-Signal & Cryogenic ASIC Engineer</p>
-            <p class="mt-6 max-w-4xl mx-auto text-gray-300 text-lg leading-relaxed">
-                Designing and verifying custom ASICs at <span class="text-neon">Fermilab</span> for particle physics and quantum computing.<br>
-                1.875 ps RMS jitter @ 4K • 1+ Gbps cryogenic SerDes • Full Netlist-to-GDSII flow • UVM 100% coverage
-            </p>
-        </section>
+        <!-- Tab Contents -->
+        <div class="bg-card/50 backdrop-blur rounded-2xl border border-gray-800 p-8 md:p-12 shadow-2xl min-h-[400px]">
 
-        <!-- About -->
-        <section id="about" class="py-20">
-            <div class="bg-card/80 backdrop-blur border border-neon/20 rounded-2xl p-10 border-glow">
-                <h2 class="text-4xl font-bold text-neon glow mb-8 font-mono">// PROFILE.exe</h2>
-                <p class="text-gray-300 leading-relaxed text-lg">
-                    ASIC Engineer at <strong>Fermilab</strong> delivering tape-out-ready mixed-signal ICs for extreme environments (4K cryogenic operation). 
-                    Full ownership from architecture → RTL → UVM verification → physical design → silicon validation. 
-                    Passionate about constraint-driven design, backtracking algorithms, and pushing the limits of silicon at −269°C.
-                </p>
-            </div>
-        </section>
-
-        <!-- Skills -->
-        <section id="skills" class="py-20">
-            <h2 class="text-4xl font-bold text-neon glow mb-12 text-center font-mono">// SKILLS.dump</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-card/80 border border-neon/20 rounded-xl p-8 border-glow">
-                    <h3 class="text-xl font-bold text-cryo mb-5">Digital & Verification</h3>
-                    <ul class="space-y-2 text-gray-300 font-mono">→ SystemVerilog RTL<br>→ UVM (Scoreboard/Monitor)<br>→ 100% Functional Coverage<br>→ FPGA Prototyping (Zynq)</ul>
-                </div>
-                <div class="bg-card/80 border border-neon/20 rounded-xl p-8 border-glow">
-                    <h3 class="text-xl font-bold text-cryo mb-5">Physical Design</h3>
-                    <ul class="space-y-2 text-gray-300 font-mono">→ Netlist-to-GDSII Flow<br>→ Floorplan / CTS / P&R<br>→ Multi-Corner STA (500 MHz)<br>→ Zero Timing Violations</ul>
-                </div>
-                <div class="bg-card/80 border border-neon/20 rounded-xl p-8 border-glow">
-                    <h3 class="text-xl font-bold text-cryo mb-5">Test & Characterization</h3>
-                    <ul class="space-y-2 text-gray-300 font-mono">→ 1.875 ps RMS PLL Jitter<br>→ Cryogenic Test @ 4K<br>→ Python/GPIB Automation<br>→ SFP+ Optical Link (1 Mbps)</ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects -->
-        <section id="projects" class="py-20">
-            <h2 class="text-4xl font-bold text-neon glow mb-12 text-center font-mono">// TAPE-OUT.log</h2>
-            <div class="grid md:grid-cols-2 gap-10">
-                <div class="bg-card/80 border border-neon/20 rounded-xl p-8 border-glow">
-                    <h3 class="text-2xl font-bold text-neon">SPROCKET</h3>
-                    <p class="text-cryo text-sm mt-1">// Cryogenic 100 KSPS Skipper-CCD Readout IC</p>
-                    <p class="text-gray-400 mt-4 text-sm">IEEE TNS 2023 • Full-custom analog front-end + digital controller validated at 4K</p>
-                </div>
-                <div class="bg-card/80 border border-neon/20 rounded-xl p-8 border-glow">
-                    <h3 class="text-2xl font-bold text-neon">SUNROCK</h3>
-                    <p class="text-cryo text-sm mt-1">// 1+ Gbps Cryogenic SerDes</p>
-                    <p class="text-gray-400 mt-4 text-sm">High-speed readout with on-chip PLL achieving 1.875 ps RMS jitter</p>
-                </div>
-                <div class="bg-card/80 border border-neon/20 rounded-xl p-8 border-glow">
-                    <h3 class="text-2xl font-bold text-neon">Quantinuum</h3>
-                    <p class="text-cryo text-sm mt-1">// Quantum Control ASIC</p>
-                    <p class="text-gray-400 mt-4 text-sm">Accelerated tape-out by 3 months via Python automation (Spacely framework)</p>
-                </div>
-                <div class="bg-card/80 border border-neon/20 rounded-xl p-8 border-glow">
-                    <h3 class="text-2xl font-bold text-neon">SAR-ADC PUF & TRNG</h3>
-                    <p class="text-cryo text-sm mt-1">// IEEE ISCAS 2022</p>
-                    <p class="text-gray-400 mt-4 text-sm">Unified randomness source passing all NIST tests</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sudoku as Verification Demo -->
-        <section id="verification-demo" class="py-20">
-            <div class="bg-card/80 backdrop-blur border border-neon/20 rounded-2xl p-10 border-glow text-center">
-                <h2 class="text-4xl font-bold text-neon glow mb-6 font-mono">// CONSTRAINT VERIFICATION DEMO</h2>
-                <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
-                    Real-time demonstration of backtracking + constraint satisfaction — the same algorithm class used in formal verification, SAT solvers, and timing closure engines.
-                </p>
-                <div id="sudoku-container">
-                    <div id="grid" class="sudoku-grid mb-6"></div>
-                    <!-- Updated button layout for Check, Solve, and New Puzzle -->
-                    <div class="flex flex-wrap justify-center gap-4 mb-6">
-                        <button id="new-puzzle" class="px-6 py-3 bg-neon text-black font-bold rounded hover:bg-cryo transition font-mono text-sm">NEW_PUZZLE()</button>
-                        <button id="check-constraints" class="px-6 py-3 border-2 border-cryo text-cryo hover:bg-cryo hover:text-black transition font-mono text-sm">CHECK_CONSTRAINTS()</button>
-                        <button id="solve-all" class="px-6 py-3 border-2 border-neon text-neon hover:bg-neon hover:text-black transition font-mono text-sm">SOLVE()</button>
+            <!-- Experience Tab -->
+            <div id="experience" class="tab-content active">
+                <h2 class="text-3xl font-bold text-neon mb-8 font-mono">// Places I Have Worked</h2>
+                
+                <div class="space-y-10">
+                    <div class="border-l-2 border-cryo pl-6 ml-2">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
+                            <h3 class="text-2xl font-bold text-white">ASIC Engineer</h3>
+                            <span class="text-cryo font-mono text-sm bg-cryo/10 px-3 py-1 rounded">Present</span>
+                        </div>
+                        <h4 class="text-xl text-gray-400 mb-4">Fermilab</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-300">
+                            <li>Designing mixed-signal ICs for cryogenic environments (4 Kelvin).</li>
+                            <li>Achieved 1.875 ps RMS jitter for on-chip PLLs.</li>
+                            <li>Executed full Netlist-to-GDSII flow and UVM verification for particle physics applications.</li>
+                        </ul>
                     </div>
-                    <p id="status" class="text-xl font-mono text-cryo"></p>
-                    <!-- Add this line inside the verification demo section, right after the status -->
-                    <p class="text-sm text-gray-500 mt-4 font-mono">
-                        Backtracking depth: ~10⁶–10⁸ states | Same complexity class as formal equivalence checking
-                    </p>
+
+                    <div class="border-l-2 border-gray-700 pl-6 ml-2">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
+                            <h3 class="text-2xl font-bold text-gray-300">VLSI Design Intern</h3>
+                            <span class="text-gray-500 font-mono text-sm bg-gray-800 px-3 py-1 rounded">Past</span>
+                        </div>
+                        <h4 class="text-xl text-gray-500 mb-4">Previous Company / Lab</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-400">
+                            <li>Worked on FPGA prototyping using Xilinx Zynq boards.</li>
+                            <li>Assisted in verification testbench development using SystemVerilog.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Contact -->
-        <section id="contact" class="py-20 text-center">
-            <div class="bg-card/80 backdrop-blur border border-neon/20 rounded-2xl p-12 border-glow">
-                <h2 class="text-4xl font-bold text-neon glow mb-8 font-mono">// CONNECT.v</h2>
-                <div class="flex flex-col sm:flex-row justify-center items-center gap-8 text-lg font-mono">
-                    <a href="mailto:yash.saxena40@gmail.com" class="text-neon hover:underline">yash.saxena40@gmail.com</a>
-                    <span class="text-gray-600">•</span>
-                    <a href="https://linkedin.com/in/yashsaxena5" class="text-neon hover:underline">LinkedIn</a>
-                    <span class="text-gray-600">•</span>
-                    <a href="https://github.com/SpacelyProject" class="text-neon hover:underline">GitHub</a>
+            <!-- Education Tab -->
+            <div id="education" class="tab-content">
+                <h2 class="text-3xl font-bold text-neon mb-8 font-mono">// Education</h2>
+                
+                <div class="space-y-8">
+                    <div class="bg-dark/50 p-6 rounded-lg border border-gray-800">
+                        <h3 class="text-xl font-bold text-white mb-2">Master of Science in Electrical Engineering</h3>
+                        <p class="text-cryo mb-4 font-mono">University Name, Year</p>
+                        <p class="text-gray-400">Specialization in VLSI Design & Embedded Systems.</p>
+                    </div>
+
+                    <div class="bg-dark/50 p-6 rounded-lg border border-gray-800">
+                        <h3 class="text-xl font-bold text-white mb-2">Bachelor of Technology in Electronics</h3>
+                        <p class="text-cryo mb-4 font-mono">University Name, Year</p>
+                        <p class="text-gray-400">Focus on Digital Electronics and Circuit Theory.</p>
+                    </div>
                 </div>
-                <a href="Resume_Yash_Saxena.pdf" class="inline-block mt-10 px-10 py-4 bg-neon text-black font-bold rounded-lg hover:bg-cryo transition font-mono text-lg">
-                    DOWNLOAD RESUME.PDF
+            </div>
+
+            <!-- Skills Tab -->
+            <div id="skills" class="tab-content">
+                <h2 class="text-3xl font-bold text-neon mb-8 font-mono">// Technical Skills</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2">Digital Design & Verification</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-4 py-2 bg-gray-800 rounded text-neon font-mono text-sm">SystemVerilog</span>
+                            <span class="px-4 py-2 bg-gray-800 rounded text-neon font-mono text-sm">UVM</span>
+                            <span class="px-4 py-2 bg-gray-800 rounded text-neon font-mono text-sm">Verilog</span>
+                            <span class="px-4 py-2 bg-gray-800 rounded text-neon font-mono text-sm">FPGA (Xilinx/Zynq)</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2">Physical Design & Tools</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-4 py-2 bg-gray-800 rounded text-cryo font-mono text-sm">Cadence Virtuoso</span>
+                            <span class="px-4 py-2 bg-gray-800 rounded text-cryo font-mono text-sm">Synopsys Design Compiler</span>
+                            <span class="px-4 py-2 bg-gray-800 rounded text-cryo font-mono text-sm">Innovus</span>
+                            <span class="px-4 py-2 bg-gray-800 rounded text-cryo font-mono text-sm">STA</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2">Embedded & Scripting</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-4 py-2 bg-gray-800 rounded text-gray-300 font-mono text-sm">Python</span>
+                            <span class="px-4 py-2 bg-gray-800 rounded text-gray-300 font-mono text-sm">C/C++</span>
+                            <span class="px-4 py-2 bg-gray-800 rounded text-gray-300 font-mono text-sm">Tcl</span>
+                            <span class="px-4 py-2 bg-gray-800 rounded text-gray-300 font-mono text-sm">MATLAB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interests Tab -->
+            <div id="interests" class="tab-content">
+                <h2 class="text-3xl font-bold text-neon mb-8 font-mono">// Interests</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="p-6 bg-dark/50 rounded-xl border border-gray-800 hover:border-neon/50 transition duration-300">
+                        <div class="text-4xl mb-4">⚛️</div>
+                        <h3 class="text-lg font-bold text-white mb-2">Quantum Computing</h3>
+                        <p class="text-sm text-gray-400">Exploring control electronics for qubit manipulation at cryogenic temperatures.</p>
+                    </div>
+                    <div class="p-6 bg-dark/50 rounded-xl border border-gray-800 hover:border-neon/50 transition duration-300">
+                        <div class="text-4xl mb-4">🔌</div>
+                        <h3 class="text-lg font-bold text-white mb-2">Embedded Systems</h3>
+                        <p class="text-sm text-gray-400">Tinkering with microcontrollers and optimizing firmware for custom hardware.</p>
+                    </div>
+                    <div class="p-6 bg-dark/50 rounded-xl border border-gray-800 hover:border-neon/50 transition duration-300">
+                        <div class="text-4xl mb-4">🚀</div>
+                        <h3 class="text-lg font-bold text-white mb-2">Particle Physics</h3>
+                        <p class="text-sm text-gray-400">Developing instrumentation for high-energy physics experiments.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resume Tab -->
+            <div id="resume" class="tab-content text-center py-10">
+                <h2 class="text-3xl font-bold text-neon mb-6 font-mono">// My Resume</h2>
+                <p class="text-gray-400 mb-10 max-w-xl mx-auto">
+                    Download my full resume to see a detailed history of my publications, projects, and work experience.
+                </p>
+                <a href="Resume_Yash_Saxena.pdf" class="inline-flex items-center gap-3 px-8 py-4 bg-neon text-dark font-bold rounded hover:bg-cryo transition transform hover:scale-105 font-mono text-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    DOWNLOAD PDF
                 </a>
             </div>
-        </section>
 
+        </div>
     </main>
 
-    <footer class="border-t border-neon/20 py-8 text-center text-gray-500 font-mono text-sm">
-        <p>© 2025 Yash Saxena • Fermilab • All constraints satisfied.</p>
+    <footer class="text-center py-8 text-gray-600 font-mono text-sm border-t border-gray-900 mt-auto">
+        <p>© 2025 Yash Saxena • Mixed-Signal ASIC Engineer</p>
     </footer>
 
-    <!-- Sudoku Logic (Constraint Solver Demo) -->
     <script>
-        // Constants
-        const GRID_SIZE = 9;
-        const EMPTY_CELL = 0;
-        
-        // DOM Elements
-        const grid = document.getElementById('grid');
-        const status = document.getElementById('status');
-        const btnNewPuzzle = document.getElementById('new-puzzle');
-        const btnCheckConstraints = document.getElementById('check-constraints');
-        const btnSolveAll = document.getElementById('solve-all');
-
-        // Game State
-        let initialBoard = [];   // Stores only the fixed puzzle numbers
-        let currentBoard = [];   // Stores the current state (fixed + user input)
-        let solutionBoard = [];  // Stores the golden solved state
-        let selected = null;
-
-        // --- Core Sudoku Algorithm (Backtracking Solver) ---
-
-        /**
-         * Checks if a number 'num' is valid at (row, col) in the given board.
-         * @param {number[][]} board - The current 9x9 board array.
-         * @param {number} row - The row index.
-         * @param {number} col - The column index.
-         * @param {number} num - The number (1-9) to check.
-         * @returns {boolean} True if the number is valid, false otherwise.
-         */
-        function isValid(board, row, col, num) {
-            // Check row and column
-            for (let x = 0; x < GRID_SIZE; x++) {
-                if (board[row][x] === num || board[x][col] === num) return false;
-            }
-            // Check 3x3 box
-            const boxRow = row - row % 3;
-            const boxCol = col - col % 3;
-            for (let i = 0; i < 3; i++)
-                for (let j = 0; j < 3; j++)
-                    if (board[boxRow + i][boxCol + j] === num) return false;
-            return true;
-        }
-
-        /**
-         * Solves the Sudoku board using a recursive backtracking algorithm.
-         * Note: This modifies the board array passed to it.
-         * @param {number[][]} board - The board to solve.
-         * @returns {boolean} True if a solution is found, false otherwise.
-         */
-        function solve(board) {
-            for (let row = 0; row < GRID_SIZE; row++) {
-                for (let col = 0; col < GRID_SIZE; col++) {
-                    if (board[row][col] === EMPTY_CELL) {
-                        for (let num = 1; num <= 9; num++) {
-                            if (isValid(board, row, col, num)) {
-                                board[row][col] = num;
-                                if (solve(board)) return true;
-                                board[row][col] = EMPTY_CELL; // Backtrack
-                            }
-                        }
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        // --- Game Setup and UI Logic ---
-
-        /**
-         * Renders the internal currentBoard state to the HTML grid.
-         */
-        function renderBoard() {
-            const cells = grid.children;
-            for (let i = 0; i < 81; i++) {
-                const r = Math.floor(i / 9);
-                const c = i % 9;
-                const value = currentBoard[r][c];
-                
-                cells[i].textContent = value === EMPTY_CELL ? '' : value;
-                cells[i].classList.remove('fixed', 'user-input', 'selected', 'error');
-
-                if (initialBoard[r][c] !== EMPTY_CELL) {
-                    cells[i].classList.add('fixed');
-                } else if (value !== EMPTY_CELL) {
-                    cells[i].classList.add('user-input');
-                }
-            }
-        }
-
-        /**
-         * Initializes the HTML grid and generates a new puzzle.
-         */
-        function createBoard() {
-            grid.innerHTML = '';
-            for (let i = 0; i < 81; i++) {
-                const cell = document.createElement('div');
-                cell.className = 'cell';
-                cell.addEventListener('click', () => selectCell(cell, i));
-                grid.appendChild(cell);
-            }
-            generatePuzzle();
-        }
-
-        /**
-         * Generates the initial puzzle, setting the internal state (initialBoard, currentBoard, solutionBoard).
-         */
-        function generatePuzzle() {
-            // 1. Generate solved board
-            solutionBoard = Array(9).fill().map(() => Array(9).fill(EMPTY_CELL));
-            solve(solutionBoard); 
-            
-            // 2. Create puzzle by copying and removing numbers
-            currentBoard = solutionBoard.map(row => [...row]); 
-            initialBoard = solutionBoard.map(row => [...row]); 
-
-            let toRemove = 50; 
-            let removedCount = 0;
-            while (removedCount < toRemove) {
-                let r = Math.floor(Math.random() * GRID_SIZE);
-                let c = Math.floor(Math.random() * GRID_SIZE);
-                
-                if (initialBoard[r][c] !== EMPTY_CELL) {
-                    const tempValue = initialBoard[r][c];
-                    initialBoard[r][c] = EMPTY_CELL; // Attempt removal
-                    
-                    // Note: Skipping full unique solution check for performance in this demo
-                    currentBoard[r][c] = EMPTY_CELL; // Remove from current board
-                    removedCount++;
-                }
-            }
-            
-            // Re-solve the puzzle to ensure currentBoard is clean
-            currentBoard = initialBoard.map(row => [...row]);
-            
-            renderBoard();
-            status.textContent = 'Constraint puzzle loaded. Ready for input.';
-            status.className = 'text-xl font-mono text-cryo';
-            selected = null;
-        }
-
-        /**
-         * Handles cell selection.
-         */
-        function selectCell(cell, idx) {
-            if (selected) selected.classList.remove('selected', 'error');
-            
-            const r = Math.floor(idx / 9);
-            const c = idx % 9;
-
-            if (initialBoard[r][c] === EMPTY_CELL) {
-                selected = cell;
-                selected.classList.add('selected');
-            } else {
-                selected = null;
-            }
-        }
-
-        /**
-         * Handles user keyboard input (1-9, Backspace, Delete).
-         */
-        function handleKeyDown(e) {
-            if (!selected) return;
-
-            const idx = [...grid.children].indexOf(selected);
-            const r = Math.floor(idx / 9);
-            const c = idx % 9;
-
-            if (e.key >= '1' && e.key <= '9') {
-                const num = parseInt(e.key);
-                currentBoard[r][c] = num;
-                selected.textContent = num;
-                selected.classList.add('user-input');
-                selected.classList.remove('error'); // Clear error on new input
-            } else if (e.key === 'Backspace' || e.key === 'Delete') {
-                currentBoard[r][c] = EMPTY_CELL;
-                selected.textContent = '';
-                selected.classList.remove('user-input', 'error'); 
-            }
-        }
-
-        // --- Verification Functions ---
-
-        /**
-         * Performs constraint checking and reports results.
-         */
-        function checkConstraints() {
-            // Clear previous errors - Using Array.from to iterate correctly over HTMLCollection
-            const cells = Array.from(grid.children);
-            cells.forEach(cell => cell.classList.remove('error'));
-
-            let errors = 0;
-            let totalConstraints = GRID_SIZE * 3; // 9 rows + 9 columns + 9 blocks = 27 checks.
-
-            // Find all cells that don't match the solution
-            for (let r = 0; r < GRID_SIZE; r++) {
-                for (let c = 0; c < GRID_SIZE; c++) {
-                    if (currentBoard[r][c] !== EMPTY_CELL && 
-                        currentBoard[r][c] !== solutionBoard[r][c]) {
-                        
-                        cells[r * GRID_SIZE + c].classList.add('error');
-                        errors++;
-                    }
-                }
-            }
-            
-            const filledCount = currentBoard.flat().filter(n => n !== EMPTY_CELL).length;
-            const requiredCount = GRID_SIZE * GRID_SIZE;
-            const isSolved = (errors === 0) && (filledCount === requiredCount);
-            
-            // --- Update Status ---
-            if (isSolved) {
-                status.textContent = 'Verification PASSED: All 81 constraints satisfied.';
-                status.className = 'text-xl font-mono text-neon glow';
-                // Disable input after completion
-                cells.forEach(cell => cell.removeEventListener('click', selectCell));
-            } else if (errors > 0) {
-                const passedConstraints = requiredCount - errors;
-                status.textContent = `Verification FAILED: ${errors} errors found. ${passedConstraints} constraints passed.`;
-                status.className = 'text-xl font-mono text-red-500';
-            } else {
-                status.textContent = `Verification INCOMPLETE: ${requiredCount - filledCount} cells remain empty.`;
-                status.className = 'text-xl font-mono text-cryo';
-            }
-        }
-
-        /**
-         * Instantly solves the puzzle and displays the result after an animation delay.
-         */
-        function solveAll() {
-            const cells = Array.from(grid.children);
-            status.textContent = 'Executing Backtracking Algorithm...';
-            status.className = 'text-xl font-mono text-neon glow'; 
-
-            // 1. Start "solving" animation (add 'solving' class)
-            cells.forEach(cell => {
-                cell.classList.add('solving');
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
             });
             
-            // Disable buttons during delay
-            btnSolveAll.disabled = true;
-            btnCheckConstraints.disabled = true;
-            btnNewPuzzle.disabled = true;
+            // Deactivate all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Activate selected tab content and button
+            document.getElementById(tabId).classList.add('active');
             
-            // 2. Set a timeout to display the result
-            setTimeout(() => {
-                // Stop animation
-                cells.forEach(cell => {
-                    cell.classList.remove('solving');
-                });
-                
-                // Re-enable buttons
-                btnSolveAll.disabled = false;
-                btnCheckConstraints.disabled = false;
-                btnNewPuzzle.disabled = false;
-
-                // 3. Display the solution
-                currentBoard = solutionBoard.map(row => [...row]); // Load golden solution
-                
-                // Lock the board by treating all cells as initial/fixed.
-                initialBoard = solutionBoard.map(row => [...row]);
-                
-                renderBoard();
-                
-                status.textContent = 'Full solution loaded. Constraints satisfied.';
-                status.className = 'text-xl font-mono text-neon';
-                
-            }, 1200); 
+            // Find the button that called this function (rough approximation for simple usage)
+            // A better way is passing 'this' or finding by index, but for this specific layout:
+            const buttons = document.querySelectorAll('.tab-btn');
+            const tabs = ['experience', 'education', 'skills', 'interests', 'resume'];
+            const index = tabs.indexOf(tabId);
+            if(index >= 0 && buttons[index]) {
+                buttons[index].classList.add('active');
+            }
         }
-
-        // --- Initialization ---
-
-        document.addEventListener('DOMContentLoaded', () => {
-            btnNewPuzzle.addEventListener('click', createBoard);
-            btnCheckConstraints.addEventListener('click', checkConstraints);
-            btnSolveAll.addEventListener('click', solveAll);
-            document.addEventListener('keydown', handleKeyDown);
-
-            createBoard();
-        });
     </script>
 </body>
 </html>
